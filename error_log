@@ -1,0 +1,3 @@
+[12-Aug-2024 13:45:02 UTC] PHP Warning:  [snuffleupagus][0.0.0.0][End-of-Life Check][log] Your PHP version '8.0.30' is not officially maintained anymore. Please upgrade as soon as possible. - Note: This message can be switched off by setting 'sp.global.show_old_php_warning.disable();' in your rules file or by setting the environment variable SP_SKIP_OLD_PHP_CHECK=1. in Unknown on line 0
+[12-Aug-2024 13:45:02 UTC] PHP Warning:  Undefined array key "argv" in phar:///home/quizrism/public_html/laraquiz/composer.phar/bin/composer on line 87
+[12-Aug-2024 13:45:02 UTC] PHP Warning:  Trying to access array offset on value of type null in phar:///home/quizrism/public_html/laraquiz/composer.phar/bin/composer on line 87
