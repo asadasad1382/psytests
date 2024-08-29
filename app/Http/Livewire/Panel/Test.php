@@ -114,8 +114,8 @@ class Test extends Component
                     $this->addError('endTest', 'زمان آزمون به پایان رسیده است');
                 }
 
-            
-       
+
+
     }
 
     public function changeAnswer($key, $value)
@@ -125,12 +125,12 @@ class Test extends Component
 
     private function timerStart()
     {
-        if(! $this->user_test)
+        if(! isset($this->user_test) )
          $this->user_test = UserTest::where('user_id', \Auth::id())
             ->where('test_id', $this->test->id)
             ->where('finish', '==', 0)
             ->first();
-        
+
         $this->timer = $this->test->time - now()->diffInMinutes($this->user_test->created_at);
         $this->dispatchBrowserEvent('timer-start');
     }
@@ -164,33 +164,33 @@ class Test extends Component
 
             \DB::transaction(function () {
                 $amount = $this->test->price;
-                
-                
+
+
                 if(auth()->user()->paid_all == 0){
-                    
+
                     $invoice = (new Invoice)->amount($amount);
                     $payment = Payment::callbackUrl(
                         route('callback',['session' => $this->test->id ])
                     )->purchase(
                         $invoice,
                         function ($driver){
-    
+
                         }
                     )->pay()->toJson();
-                    
+
                     $response = json_decode($payment, true);
                                     return redirect($response['action']);
 
                 }else{
                     $transaction = Transaction::create([
                         'user_id' => \Auth::id(),
-    
+
                         'amount' => intval($this->test->price),
                         'test_id' => $this->test->id,
                         'description' => 'پرداخت بابت تمدید آزمون'
                     ]);
-    
-    
+
+
                     $user = User::where('id',$transaction->user_id)->first();
                     $response = Http::withHeaders([
                             'token' => env('SINATIK_TOKEN')
@@ -198,18 +198,18 @@ class Test extends Component
                      'products' => [['productid' => $this->test->type_id, 'count' => 1]],
                      'email' => auth()->user()->mobile
                     ])->json();
-        
+
                     $transaction->status = 'paid';
-        
-                    
+
+
                     $transaction->save();
-                    
+
                     $user_name = $response['datas'][0]['usernames'][0];
                     $this->test_username = $user_name;
                     session(['test_username' => $user_name]);
 
                 }
-                                
+
                 session(['test_id' => $this->test->id]);
 
             });
