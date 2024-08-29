@@ -89,7 +89,7 @@
                                 <td>
                                     @for ($i = 1;$i < 5;$i++)
                                         <div class="form-check" style="margin-top: 10px !important;">
-                                            <input  wire:model.debounce="answers.{{$loop->index}}.answer2"
+                                            <input  wire:change="updateAnswers()" wire:model.debounce="answers.{{$loop->index}}.answer2"
                                                    type="radio" name="choices2{{$loop->index}}" id="choice2{{$i}}{{$loop->index}}"
                                                    value={{json_decode($question->sinatik_id,true)[$i - 1]}}>
                                         </div>
