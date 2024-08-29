@@ -130,7 +130,6 @@ class Test extends Component
             ->where('test_id', $this->test->id)
             ->where('finish', 0)
             ->first();
-        dd($this->test->id);
 
 
         $this->timer = $this->test->time - now()->diffInMinutes($this->user_test->created_at);
@@ -147,7 +146,7 @@ class Test extends Component
     {
         $userTest = UserTest::where('user_id', \Auth::id())
             ->where('test_id', $this->test->id)
-            //->where('finish', '==', 0)
+            ->where('finish', '==', 0)
             ->first();
         if ($userTest) {
             if (now()->diffInMinutes($userTest->created_at) < $this->test->time) {
