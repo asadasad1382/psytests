@@ -130,7 +130,7 @@ class Test extends Component
             ->where('test_id', $this->test->id)
             ->where('finish', 0)
             ->first();
-        dd(\Auth::id());
+        dd($this->test->id);
 
 
         $this->timer = $this->test->time - now()->diffInMinutes($this->user_test->created_at);
