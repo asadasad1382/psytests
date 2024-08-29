@@ -128,7 +128,7 @@ class Test extends Component
         if(! isset($this->user_test) )
          $this->user_test = UserTest::where('user_id', \Auth::id())
             ->where('test_id', $this->test->id)
-            ->where('finish', '==', 0)
+            ->where('finish', 0)
             ->first();
 
         $this->timer = $this->test->time - now()->diffInMinutes($this->user_test->created_at);
