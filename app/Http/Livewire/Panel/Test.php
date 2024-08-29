@@ -160,6 +160,11 @@ class Test extends Component
         }
     }
 
+
+    public function updateAnswers(){
+        session(['answers' => $this->answers]);
+    }
+
     public function payment()
     {
 

@@ -38,7 +38,7 @@
                             @if($test->has_two_answers == 0)
 `                                <td>
 `                                    <div class="form-check">
-                                        <input class="form-check-input" wire:model.debounce="answers.{{$loop->index}}.answer"
+                                        <input class="form-check-input" wire:change="updateAnswers()" wire:model.debounce="answers.{{$loop->index}}.answer"
                                                type="radio"
                                                name="choices{{$loop->index}}" id="choice1{{$loop->index}}" value="1">
                                         <label class="form-check-label" for="choice1{{$loop->index}}">
@@ -46,7 +46,7 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" wire:model.debounce="answers.{{$loop->index}}.answer"
+                                        <input class="form-check-input" wire:change="updateAnswers()" wire:model.debounce="answers.{{$loop->index}}.answer"
                                                type="radio" name="choices{{$loop->index}}" id="choice2{{$loop->index}}"
                                                value="2">
                                         <label class="form-check-label" for="choice2{{$loop->index}}">
@@ -54,7 +54,7 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" wire:model.debounce="answers.{{$loop->index}}.answer"
+                                        <input class="form-check-input" wire:change="updateAnswers()" wire:model.debounce="answers.{{$loop->index}}.answer"
                                                type="radio" name="choices{{$loop->index}}" id="choice3{{$loop->index}}"
                                                value="3">
                                         <label class="form-check-label" for="choice3{{$loop->index}}">
