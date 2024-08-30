@@ -61,7 +61,8 @@ class Test extends Component
             'ip_address' => $this->ip,
             'finish' => 0,
             'browser' => $this->agent,
-            'username' => $this->test_username
+            'username' => $this->test_username,
+            'transaction_id' => session('transaction_id')
         ]);
         $this->user_test_count++;
         $this->questions = $this->getQuestions();
@@ -214,6 +215,7 @@ class Test extends Component
                     $user_name = $response['datas'][0]['usernames'][0];
                     $this->test_username = $user_name;
                     session(['test_username' => $user_name]);
+                    session(['transaction_id' => $transaction->id]);
 
                 }
 
