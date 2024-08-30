@@ -22,6 +22,11 @@ class UserTest extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+
+    public function transaction(){
+        return $this->belongsTo(Transaction::class);
+    }
+
     public function test(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Test::class, 'id', 'test_id');

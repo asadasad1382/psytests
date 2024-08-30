@@ -10,4 +10,8 @@ class Transaction extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function user_test(){
+        return $this->hasOne(UserTest::class);
+    }
 }

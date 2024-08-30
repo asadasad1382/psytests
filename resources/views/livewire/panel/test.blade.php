@@ -1,6 +1,6 @@
 <div>
     <div>
-@if ($user_test && $user_test->finish == 0 && auth()->user()->transactions()->where('test_id',$test->id)->where('status','paid')->exists())
+@if ($user_test && $user_test->finish == 0 && $user_test->transaction()->where('status','paid')->exists())
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">بانک سوالات</h3>
@@ -115,16 +115,16 @@
                     class="btn btn-success" wire:click="end">پایان آزمون</button>
             </div>
         </div>
-    @elseif ($user_test && $user_test->finish == 1 && auth()->user()->transactions()->where('test_id',$test->id)->where('status','paid')->exists())
+    @elseif ($user_test && $user_test->finish == 1 && $user_test->transaction()->where('status','paid')->exists())
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">شروع آزمون</h3>
+                <h3 class="card-title">شروع آزمون جدید</h3>
             </div>
             <div class="card-body">
                 <div class="alert alert-warning p-3">
                     شما تا کنون {{$user_test_count}} در این آزمون شرکت کرده اید!
                     <br>
-                    تعدا مجاز شرکت در آزمون 3 بار می باشد
+
                 </div>
                 <hr>
                 <p>{{$test->end_message}}</p>
@@ -132,12 +132,12 @@
                 <a  target="_blank" href="{{route('result',['id' => $user_test->id])}}" class="btn btn-primary">
                     دانلود نتیجه آزمون
                 </a>
-                <button class="btn btn-success" wire:click="start" wire:target="start" wire:loading.attr="disabled">شروع
+                <button class="btn btn-success" wire:click="payment" wire:target="payment" wire:loading.attr="disabled">شروع
                     آزمون جدید
                 </button>
             </div>
         </div>
-    @elseif (! $user_test && auth()->user()->transactions()->where('test_id',$test->id)->where('status','paid')->exists())
+    @elseif (! $user_test && $user_test->transaction()->where('status','paid')->exists())
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">شروع آزمون</h3>
