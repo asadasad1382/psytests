@@ -138,6 +138,7 @@ class Test extends Component
 
     public function updatedAnswers()
     {
+        session(['answers' => $this->answers]);
         $this->checkUserTest();
         $this->timerStart();
     }
@@ -162,7 +163,7 @@ class Test extends Component
 
 
     public function updateAnswers(){
-        session(['answers' => $this->answers]);
+
     }
 
     public function payment()
