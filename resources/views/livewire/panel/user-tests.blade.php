@@ -38,7 +38,7 @@
                         %
                     </td>
                     <td>
-                        <a href="{{route('panel.user_test',['id' => $userTest->id])}}" class="btn btn-info">
+                        <a href="{{route('result',['id' => $userTest->id])}}" class="btn btn-info">
                             <i class="fa-light fa-eye"></i>
                         </a>
                     </td>

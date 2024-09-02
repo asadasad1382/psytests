@@ -44,12 +44,6 @@
                         <span class="menu-title text-truncate">نتایج آزمون</span>
                     </a>
                 </li>
-                <li class="nav-item {{url()->current() === route('panel.profile') ? 'active' : ''}}">
-                    <a class="d-flex align-items-center" href="{{route('panel.profile')}}">
-                        <i class="fa-light fa-user-alt"></i>
-                        <span class="menu-title text-truncate">تکمیل ثبت نام</span>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
