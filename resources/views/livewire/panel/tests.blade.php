@@ -30,7 +30,7 @@
                     <div class="card">
                         <div class="card-body text-center">
                             <a href="{{route('panel.test',['id' => $test->id])}}">
-                                <img style="max-width:200px;max-height: 120px !important;" src={{$test->image}} ></img>
+                                <img style="max-width:200px;height: 150px !important;" src={{$test->image}} ></img>
                                 <h4>{{$test->name}}</h4>
                                 <small class="text-dark">تعداد سوالات: {{$test->number_of_question}}</small><br>
                                 <small class="text-dark">زمان آزمون: {{$test->time}} دقیقه</small>

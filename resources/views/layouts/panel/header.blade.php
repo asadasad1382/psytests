@@ -66,7 +66,7 @@
                 <ul class="nav navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link nav-link-style">
-                            <i class="ficon" data-feather="moon"></i>
+                            <i class="ficon" data-feather="sun"></i>
                         </a>
                     </li>
                 </ul>
