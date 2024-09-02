@@ -13,13 +13,17 @@ class Login extends Component
 
     public function render()
     {
+        if(auth()->check()){
+            return $this->redirect(route('admin.dashboard'));
+        }
+
         return view('livewire.auth.login')
             ->extends('layouts.admin.master')->section('main');
     }
 
     public function login()
     {
-        
+
         if ($this->type === 'admin') {
             $data = [
                 'mobile' => $this->mobile,

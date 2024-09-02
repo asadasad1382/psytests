@@ -49,5 +49,4 @@
         <a class="btn btn-primary" href="{{route('register')}}">ثبت نام</a>
     </div>
 </div>
-<a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=517850&Code=hpHRWJC1fYhmA6fUaro7lRKjDgl0tzMz'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=517850&Code=hpHRWJC1fYhmA6fUaro7lRKjDgl0tzMz' alt='' style='cursor:pointer' code='hpHRWJC1fYhmA6fUaro7lRKjDgl0tzMz'></a>
 
