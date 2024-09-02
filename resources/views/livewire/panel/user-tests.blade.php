@@ -11,8 +11,6 @@
                 <th>ip</th>
                 <th>مدت پاسخ گویی</th>
                 <th>تعداد کل سوالات پاسخ داده شده</th>
-                <th>تعداد جواب های درست</th>
-                <th>تعداد جواب های نادرست</th>
                 <th>تعداد سوالات بی جواب</th>
                 <th>درصد</th>
                 <th></th>
@@ -26,8 +24,6 @@
                     <td>{{$userTest->ip_address}}</td>
                     <td>{{$userTest->time_length}}</td>
                     <td>{{$userTest->choices->where('answer','!=',null)?->count()}}</td>
-                    <td>{{$userTest->choices->where('is_correct',1)->count()}}</td>
-                    <td>{{$userTest->choices->where('is_correct',0)->count()}}</td>
                     <td>{{$userTest->choices->where('answer',null)?->count()}}</td>
                     <td>
                         <div class="progress-bar" role="progressbar"
