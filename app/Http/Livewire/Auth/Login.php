@@ -14,7 +14,7 @@ class Login extends Component
     public function mount()
     {
         if(auth()->check()){
-            return $this->redirect(route('admin.dashboard'));
+            return $this->redirect(route('panel.dashboard'));
         }
     }
     public function render()
