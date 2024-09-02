@@ -11,11 +11,14 @@ class Login extends Component
 
     protected $queryString = ['type'];
 
-    public function render()
+    public function mount()
     {
         if(auth()->check()){
             return $this->redirect(route('admin.dashboard'));
         }
+    }
+    public function render()
+    {
 
         return view('livewire.auth.login')
             ->extends('layouts.admin.master')->section('main');
