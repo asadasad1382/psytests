@@ -49,8 +49,6 @@
     </div>
 </div>
 <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=517850&Code=hpHRWJC1fYhmA6fUaro7lRKjDgl0tzMz'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=517850&Code=hpHRWJC1fYhmA6fUaro7lRKjDgl0tzMz' alt='' style='cursor:pointer' code='hpHRWJC1fYhmA6fUaro7lRKjDgl0tzMz'></a>
-@script
 <script type="text/javascript">
     !function(){var i="mwXQS3",a=window,d=document;function g(){var g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}"complete"===d.readyState?g():a.attachEvent?a.attachEvent("onload",g):a.addEventListener("load",g,!1);}();
 </script>
-@endscript
