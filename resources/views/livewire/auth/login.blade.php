@@ -25,7 +25,7 @@
             </div>
         @endif
         <div>
-            <label class="label" for="userName">نام کاربری (کد ملی)</label>
+            <label class="label" for="userName">نام کاربری </label>
             <input type="text" wire:model.defer="mobile" class="form-control">
             @error('mobile')
             <span class="text-danger">{{$message}}</span>
