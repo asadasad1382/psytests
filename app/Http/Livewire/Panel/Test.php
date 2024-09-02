@@ -61,8 +61,7 @@ class Test extends Component
             'ip_address' => $this->ip,
             'finish' => 0,
             'browser' => $this->agent,
-            'username' => $this->test_username,
-            'transaction_id' => session('transaction_id')
+            'username' => $this->test_username
         ]);
         $this->user_test_count++;
         $this->questions = $this->getQuestions();
@@ -88,32 +87,32 @@ class Test extends Component
 
     public function end()
     {
-                $this->timerStart();
-                $result = [];
+        $this->timerStart();
+        $result = [];
 
-                if ($this->timer > 0) {
-                    foreach ($this->answers as $answer) {
-                        UserChoice::create($answer);
+        if ($this->timer > 0) {
+            foreach ($this->answers as $answer) {
+                UserChoice::create($answer);
 
-                        $result[strval($answer['page_id'] + 1)] = [
-                          'max' => $answer['answer'],
-                          'min' => $answer['answer2']
-                        ];
+                $result[strval($answer['page_id'] + 1)] = [
+                    'max' => $answer['answer'],
+                    'min' => $answer['answer2']
+                ];
 
-                    }
-                    $result = serialize($result);
-                    session(['test_result' => $result]);
-                    $this->user_test->update([
-                        'finish' => 1,
-                        'time_length' => now()->diffInMinutes($this->user_test->created_at)
-                    ]);
-                } else {
-                    $this->user_test->update([
-                        'finish' => 1,
-                        'time_length' => now()->diffInMinutes($this->user_test->created_at)
-                    ]);
-                    $this->addError('endTest', 'زمان آزمون به پایان رسیده است');
-                }
+            }
+            $result = serialize($result);
+            session(['test_result' => $result]);
+            $this->user_test->update([
+                'finish' => 1,
+                'time_length' => now()->diffInMinutes($this->user_test->created_at)
+            ]);
+        } else {
+            $this->user_test->update([
+                'finish' => 1,
+                'time_length' => now()->diffInMinutes($this->user_test->created_at)
+            ]);
+            $this->addError('endTest', 'زمان آزمون به پایان رسیده است');
+        }
 
 
 
@@ -126,12 +125,11 @@ class Test extends Component
 
     private function timerStart()
     {
-        if(! isset($this->user_test) )
-         $this->user_test = UserTest::where('user_id', \Auth::id())
-            ->where('test_id', $this->test->id)
-            ->where('finish', 0)
-            ->first();
-
+        if(! $this->user_test)
+            $this->user_test = UserTest::where('user_id', \Auth::id())
+                ->where('test_id', $this->test->id)
+                ->where('finish', '==', 0)
+                ->first();
 
         $this->timer = $this->test->time - now()->diffInMinutes($this->user_test->created_at);
         $this->dispatchBrowserEvent('timer-start');
@@ -139,7 +137,6 @@ class Test extends Component
 
     public function updatedAnswers()
     {
-        session(['answers' => $this->answers]);
         $this->checkUserTest();
         $this->timerStart();
     }
@@ -148,7 +145,7 @@ class Test extends Component
     {
         $userTest = UserTest::where('user_id', \Auth::id())
             ->where('test_id', $this->test->id)
-            ->where('finish', '==', 0)
+            //->where('finish', '==', 0)
             ->first();
         if ($userTest) {
             if (now()->diffInMinutes($userTest->created_at) < $this->test->time) {
@@ -162,65 +159,59 @@ class Test extends Component
         }
     }
 
-
-    public function updateAnswers(){
-
-    }
-
     public function payment()
     {
 
-            \DB::transaction(function () {
-                $amount = $this->test->price;
+        \DB::transaction(function () {
+            $amount = $this->test->price;
 
 
-                if(auth()->user()->paid_all == 0){
+            if(auth()->user()->paid_all == 0){
 
-                    $invoice = (new Invoice)->amount($amount);
-                    $payment = Payment::callbackUrl(
-                        route('callback',['session' => $this->test->id ])
-                    )->purchase(
-                        $invoice,
-                        function ($driver){
+                $invoice = (new Invoice)->amount($amount);
+                $payment = Payment::callbackUrl(
+                    route('callback',['session' => $this->test->id ])
+                )->purchase(
+                    $invoice,
+                    function ($driver){
 
-                        }
-                    )->pay()->toJson();
+                    }
+                )->pay()->toJson();
 
-                    $response = json_decode($payment, true);
-                                    return redirect($response['action']);
+                $response = json_decode($payment, true);
+                return redirect($response['action']);
 
-                }else{
-                    $transaction = Transaction::create([
-                        'user_id' => \Auth::id(),
+            }else{
+                $transaction = Transaction::create([
+                    'user_id' => \Auth::id(),
 
-                        'amount' => intval($this->test->price),
-                        'test_id' => $this->test->id,
-                        'description' => 'پرداخت بابت تمدید آزمون'
-                    ]);
-
-
-                    $user = User::where('id',$transaction->user_id)->first();
-                    $response = Http::withHeaders([
-                            'token' => env('SINATIK_TOKEN')
-                        ])->post('https://sinatik.com/api/buytest',[
-                     'products' => [['productid' => $this->test->type_id, 'count' => 1]],
-                     'email' => auth()->user()->mobile
-                    ])->json();
-
-                    $transaction->status = 'paid';
+                    'amount' => intval($this->test->price),
+                    'test_id' => $this->test->id,
+                    'description' => 'پرداخت بابت تمدید آزمون'
+                ]);
 
 
-                    $transaction->save();
+                $user = User::where('id',$transaction->user_id)->first();
+                $response = Http::withHeaders([
+                    'token' => env('SINATIK_TOKEN')
+                ])->post('https://sinatik.com/api/buytest',[
+                    'products' => [['productid' => $this->test->type_id, 'count' => 1]],
+                    'email' => auth()->user()->mobile
+                ])->json();
 
-                    $user_name = $response['datas'][0]['usernames'][0];
-                    $this->test_username = $user_name;
-                    session(['test_username' => $user_name]);
-                    session(['transaction_id' => $transaction->id]);
+                $transaction->status = 'paid';
 
-                }
 
-                session(['test_id' => $this->test->id]);
+                $transaction->save();
 
-            });
+                $user_name = $response['datas'][0]['usernames'][0];
+                $this->test_username = $user_name;
+                session(['test_username' => $user_name]);
+
+            }
+
+            session(['test_id' => $this->test->id]);
+
+        });
     }
 }
