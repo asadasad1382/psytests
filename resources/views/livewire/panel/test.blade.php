@@ -132,9 +132,6 @@
                     <a  target="_blank" href="{{route('result',['id' => $user_test->id])}}" class="btn btn-primary">
                         دانلود نتیجه آزمون
                     </a>
-                    <button class="btn btn-success" wire:click="start" wire:target="start" wire:loading.attr="disabled">شروع
-                        آزمون جدید
-                    </button>
                 </div>
             </div>
         @elseif (! $user_test && auth()->user()->transactions()->where('test_id',$test->id)->where('status','paid')->exists())
