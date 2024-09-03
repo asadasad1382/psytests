@@ -12,6 +12,9 @@ class UserTest extends Model
     protected $table = 'user_test';
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'incomplete_answers' => 'array'
+    ];
     public function choices(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserChoice::class, 'user_test_id', 'id');
