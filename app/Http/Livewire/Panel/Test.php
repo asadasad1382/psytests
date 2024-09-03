@@ -34,6 +34,9 @@ class Test extends Component
         $this->ip = request()->ip();
         $this->agent = request()->userAgent();
         $this->checkUserTest();
+        if(session('answers') != null){
+            $this->answers = session('answers');
+        }
         if ($this->user_test_count >= 3) {
             $this->addError('startTest', 'تعداد دفعات آزمون شما با تمام رسیده است');
         }
@@ -137,6 +140,7 @@ class Test extends Component
 
     public function updatedAnswers()
     {
+        session(['answers' => $this->answers]);
         $this->checkUserTest();
         $this->timerStart();
     }

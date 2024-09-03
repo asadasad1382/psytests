@@ -37,18 +37,18 @@ Route::get('/result',function (Request $request){
 
                 }
 
-                    $result = serialize($result);
+                $result = serialize($result);
            $data = Http::withHeaders([
             'token' => env('SINATIK_TOKEN'),
             'results' => $result
         ])->post('https://sinatik.com/api/detail',[
             'username' => $user_test->username ?? session('test_username')
         ])->json()['datas'];
-        
+
         $pdf = $data['pdf'];
         if (!\Auth::user()->can('view', $user_test)) {
             return abort(403, 'شما مجاز با دیدن این بخش نیستید!');
-        } 
+        }
         return redirect()->to($pdf);
 })->name('result');
 Route::get('/', function () {
