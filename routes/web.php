@@ -22,6 +22,9 @@ Route::get('/updateapp', function()
     echo 'dump-autoload complete';
 });
 
+Route::get('/questions',function (Request $request){
+
+});
 
 Route::get('/result',function (Request $request){
            $id = $request->query('id');
