@@ -76,7 +76,11 @@ class Test extends Component
 
         $count = Question::where('test_id', $this->test->id)->count();
         $randomCount = $count > $this->test->number_of_question ? $this->test->number_of_question : $count;
-        $questions = Question::where('test_id', $this->test->id)->get()->random($randomCount);
+        $questions_query = Question::where('test_id', $this->test->id);
+
+        if( isset( $this->test->total_pages ) )
+            $questions_query = $questions_query->paginate($this->test->total_pages);
+        $questions = $questions_query->get()->random($randomCount);
         foreach ($questions as $question) {
             array_push($this->answers, [
                 'user_test_id' => $this->user_test->id,
