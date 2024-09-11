@@ -35,7 +35,7 @@ class Tests extends Component
     private function getTests()
     {
         return app(Pipeline::class)
-            ->send(Test::query())
+            ->send(Test::where('active',1)->query())
             ->through([
                 new GlobalFilter('name', $this->filter)
             ])
