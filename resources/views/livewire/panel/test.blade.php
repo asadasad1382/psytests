@@ -119,7 +119,6 @@
                     </div>
                     <div class="col-md-9 col-12"></div>
                     <div class="col-md-2 col-12">
-                        @if ($paginator->hasPages())
                             <nav role="navigation" aria-label="Pagination Navigation">
                                 <span>
                                     <button class='btn btn-outline-info' disabled="{{$paginator->onFirstPage()}}" wire:click="previousPage" wire:loading.attr="disabled" rel="prev">صفحه قبل</button>
@@ -130,7 +129,6 @@
                                                         rel="next">صفحه بعد</button>
                                 </span>
                             </nav>
-                        @endif
                     </div>
                 </div>
             </div>
