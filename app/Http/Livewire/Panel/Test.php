@@ -22,6 +22,7 @@ class Test extends Component
     public $questions = [], $test, $user_test, $user_test_count, $ip, $agent, $answers = [],$answers2 = [], $timer
     ,$page_id = 1,$test_username;
 
+
     public function mount($id)
     {
 
@@ -48,7 +49,7 @@ class Test extends Component
 
     public function render()
     {
-        return view('livewire.panel.test')
+        return view('livewire.panel.test',['questions' => $this->getQuestions()])
             ->extends('layouts.panel.master')->section('main');
     }
 
@@ -67,7 +68,6 @@ class Test extends Component
             'username' => $this->test_username
         ]);
         $this->user_test_count++;
-        $this->questions = $this->getQuestions();
         $this->timerStart();
     }
 
@@ -77,12 +77,11 @@ class Test extends Component
         $count = Question::where('test_id', $this->test->id)->count();
         $randomCount = $count > $this->test->number_of_question ? $this->test->number_of_question : $count;
         $questions_query = Question::where('test_id', $this->test->id);
-        $questions = $questions_query->get();
-        if( isset( $this->test->total_pages ) ) {
-            $questions = $questions_query->paginate($this->test->total_pages);
-        }
 
-        $questions->random($randomCount);
+        $questions = $questions_query->paginate($this->test->total_pages);
+
+
+        //$questions->random($randomCount);
         foreach ($questions as $question) {
             array_push($this->answers, [
                 'user_test_id' => $this->user_test->id,
@@ -163,7 +162,6 @@ class Test extends Component
             if (now()->diffInMinutes($userTest->created_at) < $this->test->time) {
                 $this->user_test = $userTest;
                 if (count($this->questions) == 0) {
-                    $this->questions = $this->getQuestions();
                 }
             } else {
                 $this->end();
