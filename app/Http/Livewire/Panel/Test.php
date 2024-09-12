@@ -19,9 +19,9 @@ class Test extends Component
 {
     use Breadcrumb, WithPagination;
 
-    public $questions = [], $test, $user_test, $user_test_count, $ip, $agent, $answers = [],$answers2 = [], $timer
+    public $test, $user_test, $user_test_count, $ip, $agent, $answers = [],$answers2 = [], $timer
     ,$page_id = 1,$test_username;
-
+    protected $questions = [];
 
     public function mount($id)
     {
@@ -45,11 +45,21 @@ class Test extends Component
         if ($this->user_test) {
             $this->timerStart();
         }
+
+        foreach ($this->questions as $question) {
+            array_push($this->answers, [
+                'user_test_id' => $this->user_test->id,
+                'page_id' => $question->page_id,
+                'question_id' => $question->id,
+                'answer' => null
+            ]);
+        }
     }
 
     public function render()
     {
-        return view('livewire.panel.test',['questions' => $this->getQuestions()])
+        $this->questions = $this->getQuestions();
+        return view('livewire.panel.test',['questions' => $this->questions])
             ->extends('layouts.panel.master')->section('main');
     }
 
@@ -82,14 +92,7 @@ class Test extends Component
 
 
         //$questions->random($randomCount);
-        foreach ($questions as $question) {
-            array_push($this->answers, [
-                'user_test_id' => $this->user_test->id,
-                'page_id' => $question->page_id,
-                'question_id' => $question->id,
-                'answer' => null
-            ]);
-        }
+
         return $questions;
     }
 
