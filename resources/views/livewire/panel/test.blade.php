@@ -119,7 +119,7 @@
                     </div>
                     <div class="col-md-9 col-12"></div>
                     <div class="col-md-2 col-12">
-                        {{$questions->links()}}
+                        {{$questions->links('vendor.livewire.simple-bootstrap')}}
                     </div>
                 </div>
             </div>
