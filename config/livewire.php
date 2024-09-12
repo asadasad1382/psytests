@@ -16,7 +16,7 @@ return [
     */
 
     'class_namespace' => 'App\\Http\\Livewire',
-
+    'pagination_theme' => 'bootstrap',
     /*
     |--------------------------------------------------------------------------
     | View Path

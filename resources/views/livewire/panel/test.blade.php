@@ -119,16 +119,7 @@
                     </div>
                     <div class="col-md-9 col-12"></div>
                     <div class="col-md-2 col-12">
-                            <nav role="navigation" aria-label="Pagination Navigation">
-                                <span>
-                                    <button class='btn btn-outline-info' disabled="{{$paginator->onFirstPage()}}" wire:click="previousPage" wire:loading.attr="disabled" rel="prev">صفحه قبل</button>
-                                </span>
-
-                                <span>
-                                    <button class='btn btn-outline-info' disabled="{{$paginator->onLastPage()}}" wire:click="nextPage" wire:loading.attr="disabled"
-                                                        rel="next">صفحه بعد</button>
-                                </span>
-                            </nav>
+                        {{$questions->links()}}
                     </div>
                 </div>
             </div>
