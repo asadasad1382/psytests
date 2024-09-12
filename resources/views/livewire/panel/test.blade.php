@@ -107,12 +107,31 @@
                     {{$message}}
                 </div>
                 @enderror
-                <div class="card-footer">
-                    <button
-                        wire:target="answers"
-                        wire:loading.attr="disabled"
-                        {{count(array_column($answers,'answer')) != $test->number_of_question || count(array_column($answers,'answer2')) != $test->number_of_question ? "disabled" : ''}}
-                        class="btn btn-success" wire:click="end">پایان آزمون</button>
+                <div class="card-footer row ">
+                    <div class="col-md-1 col-12">
+                        <button
+                            wire:target="answers"
+                            wire:loading.attr="disabled"
+                            {{count(array_column($answers,'answer')) != $test->number_of_question || count(array_column($answers,'answer2')) != $test->number_of_question ? "disabled" : ''}}
+                            class="btn btn-success" wire:click="end">
+                            پایان آزمون
+                        </button>
+                    </div>
+                    <div class="col-md-9 col-12"></div>
+                    <div class="col-md-2 col-12">
+                        @if ($paginator->hasPages())
+                            <nav role="navigation" aria-label="Pagination Navigation">
+                                <span>
+                                    <button class='btn btn-outline-info' disabled="{{$paginator->onFirstPage()}}" wire:click="previousPage" wire:loading.attr="disabled" rel="prev">صفحه قبل</button>
+                                </span>
+
+                                <span>
+                                    <button class='btn btn-outline-info' disabled="{{$paginator->onLastPage()}}" wire:click="nextPage" wire:loading.attr="disabled"
+                                                        rel="next">صفحه بعد</button>
+                                </span>
+                            </nav>
+                        @endif
+                    </div>
                 </div>
             </div>
         @elseif ($user_test && $user_test->finish == 1 && auth()->user()->transactions()->where('test_id',$test->id)->where('status','paid')->exists())
